@@ -1,0 +1,17 @@
+{
+  "key": "age",
+  "value": "population",
+  "width": 800,
+  "height": 600,
+  "data": [
+    {"age":"<5", "population":100},
+    {"age": "6-15", "population": 220},
+    {"age": "16-25", "population": 180},
+    {"age": "26-35", "population": 160},
+    {"age": "36-45", "population": 190},
+    {"age":"46-55", "population": 205},
+    {"age": "56-65", "population": 215},
+    {"age": "66-75", "population": 230},
+    {"age": ">76", "population": 280}
+  ]
+}
