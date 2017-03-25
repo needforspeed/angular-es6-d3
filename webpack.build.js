@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   context: __dirname,
-  entry: './index.js',
+  entry: './src/index.js',
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'angular-es6-d3.js'

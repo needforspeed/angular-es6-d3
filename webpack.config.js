@@ -1,6 +1,6 @@
 module.exports = {
   context: __dirname,
-  entry: './src/app.js',
+  entry: './src/example.js',
   devServer: {
     contentBase: [
       "assets",

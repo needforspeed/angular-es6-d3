@@ -1,14 +1,14 @@
 export default class PieController {
   /* @ngInject */
-  constructor($element) {
+  constructor($element, D3Factory) {
     this.name = 'Pie';
-
-    this.svg = d3.select($element[0])
+    this.d3 = D3Factory;
+    this.svg = this.d3.select($element[0])
       .append('svg');
 
     this.g = this.svg.append('g');
 
-    this.tooltip = d3.select($element[0])
+    this.tooltip = this.d3.select($element[0])
       .append('div')
       .attr('class', 'tooltip');
   }
@@ -26,12 +26,12 @@ export default class PieController {
       .attr('transform', `translate(${this.width / 2}, ${this.height / 2})`);
 
     const radius = Math.min(this.width, this.height) / 2;
-    const color = d3.scaleOrdinal(d3.schemeCategory20);
-    const pie = d3.pie()
+    const color = this.d3.scaleOrdinal(this.d3.schemeCategory20);
+    const pie = this.d3.pie()
       .sort(null)
       .value(d => d[this.value]);
 
-    const path = d3.arc()
+    const path = this.d3.arc()
       .innerRadius(50)
       .outerRadius(radius - 50);
 
@@ -57,7 +57,7 @@ export default class PieController {
       .attr('fill', d => color(d.data[this.key]));
 
     arc.on('mouseover', d => {
-      let total = d3.sum(jsonData.map(d => d[this.value]));
+      let total = this.d3.sum(jsonData.map(d => d[this.value]));
       let percent = Math.round(1000 * d.data[this.value] / total) / 10;
       this.tooltip.select('.label').html(d.data[this.key]);
       this.tooltip.select(`.${this.value}`).html(d.data[this.value]);
@@ -71,8 +71,8 @@ export default class PieController {
 
     // optional
     arc.on('mousemove', () => {
-      this.tooltip.style('top', (d3.event.layerY + 10) + 'px')
-        .style('left', (d3.event.layerX + 10) + 'px');
+      this.tooltip.style('top', (this.d3.event.layerY + 10) + 'px')
+        .style('left', (this.d3.event.layerX + 10) + 'px');
     });
   }
 }
