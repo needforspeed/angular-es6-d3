@@ -1,6 +1,6 @@
 {
   "name": "angular-es6-d3",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "angular in es6 featured code with d3",
   "main": "index.js",
   "scripts": {
@@ -20,6 +20,10 @@
   ],
   "author": "Yuncong Zhang",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/needforspeed/angular-es6-d3.git"
+  },
   "devDependencies": {
     "babel-core": "^6.24.0",
     "babel-loader": "^6.4.1",
