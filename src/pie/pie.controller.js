@@ -32,8 +32,8 @@ export default class PieController {
       .value(d => d[this.value]);
 
     const path = this.d3.arc()
-      .innerRadius(50)
-      .outerRadius(radius - 50);
+      .innerRadius(this.iradius)
+      .outerRadius(radius - this.iradius);
 
     this.tooltip.append('div')
       .attr('class', 'label');

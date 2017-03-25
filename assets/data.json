@@ -3,6 +3,7 @@
   "value": "population",
   "width": 800,
   "height": 600,
+  "innerRadius": 100,
   "data": [
     {"age":"<5", "population":100},
     {"age": "6-15", "population": 220},

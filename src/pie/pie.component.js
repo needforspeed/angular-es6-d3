@@ -7,7 +7,8 @@ export const PieComponent = {
     key: '<',
     value: '<',
     width: '<',
-    height: '<'
+    height: '<',
+    iradius: '<'
   },
   controller: PieController,
   controllerAs: 'pieCtrl',

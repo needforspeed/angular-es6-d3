@@ -1,4 +1,3 @@
-import angular from 'angular';
 import d3 from '../d3';
 import { PieComponent } from './pie.component';
 
