@@ -2,10 +2,11 @@
   "name": "angular-es6-d3",
   "version": "0.0.1",
   "description": "angular in es6 featured code with d3",
-  "main": "src/app.js",
+  "main": "dist/angular-es6-d3.js",
   "scripts": {
     "test": "true",
-    "start": "webpack-dev-server --watch-content-base --open"
+    "start": "webpack-dev-server --watch-content-base --open",
+    "build": "webpack --config webpack.build.js --bail -p --progress"
   },
   "keywords": [
     "angular",
