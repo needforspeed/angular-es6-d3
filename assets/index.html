@@ -2,22 +2,6 @@
 <html ng-app="angular.d3">
   <head>
     <title>My Angular D3</title>
-    <style type="text/css">
-    .tooltip {
-	  background: #eee;
-	  box-shadow: 0 0 5px #999999;
-	  color: #333;
-	  display: none;
-	  font-size: 12px;
-	  left: 130px;
-	  padding: 10px;
-	  position: absolute;
-	  text-align: center;
-	  top: 95px;
-	  width: 80px;
-	  z-index: 10;
-	}
-    </style>
   </head>
   <body ng-controller="FetchDataController as fdc">
     <pie-chart data="fdc.pie.data"
