@@ -1,0 +1,22 @@
+{
+  "caption": "donut chart example",
+  "key": "age",
+  "value": "population",
+  "width": 600,
+  "height": 700,
+  "innerRadius": 100,
+  "legendSize": 10,
+  "legendWidth": 60,
+  "legendPadding": 50,
+  "legendOrient": "horizontal",
+  "data": [
+    {"age":"0-9", "population":200},
+    {"age": "10-19", "population": 120},
+    {"age": "20-29", "population": 180},
+    {"age": "30-39", "population": 160},
+    {"age": "40-49", "population": 190},
+    {"age":"50-59", "population": 205},
+    {"age": "60-69", "population": 215},
+    {"age": ">70", "population": 300}
+  ]
+}

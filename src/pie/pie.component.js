@@ -1,17 +1,21 @@
 import PieController from './pie.controller';
-import template from './pie.html';
 
 export const PieComponent = {
   bindings: {
+    caption: '<',
     data: '<',
     key: '<',
     value: '<',
     width: '<',
     height: '<',
-    iradius: '<'
+    iradius: '<',
+    lsize: '<',
+    lheight: '<',
+    lwidth: '<',
+    lpadding: '<',
+    lorient: '<'
   },
   controller: PieController,
   controllerAs: 'pieCtrl',
-  selector: 'pieChart',
-  template
+  selector: 'pieChart'
 }

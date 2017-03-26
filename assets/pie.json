@@ -1,9 +1,14 @@
 {
+  "caption": "pie chart example",
   "key": "age",
   "value": "population",
-  "width": 800,
+  "width": 700,
   "height": 600,
-  "innerRadius": 100,
+  "innerRadius": 0,
+  "legendSize": 10,
+  "legendWidth": 40,
+  "legendPadding": 5,
+  "legendOrient": "vertical",
   "data": [
     {"age":"<5", "population":100},
     {"age": "6-15", "population": 220},

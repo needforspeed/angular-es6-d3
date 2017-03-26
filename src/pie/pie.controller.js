@@ -1,9 +1,16 @@
 export default class PieController {
   /* @ngInject */
-  constructor($element, D3Factory) {
-    this.name = 'Pie';
+  constructor($element, D3Factory, D3LegendFactory) {
     this.d3 = D3Factory;
-    this.svg = this.d3.select($element[0])
+    this.legend = D3LegendFactory;
+
+    let figure = this.d3.select($element[0])
+      .append('figure');
+
+    this.figcaption = figure
+      .append('figcaption');
+
+    this.svg = figure
       .append('svg');
 
     this.g = this.svg.append('g');
@@ -18,12 +25,16 @@ export default class PieController {
       return;
     }
 
+    this.figcaption
+      .text(this.caption)
+      .attr('class', 'text-center');
+
     this.svg
       .attr('width', this.width)
       .attr('height', this.height);
 
     this.g
-      .attr('transform', `translate(${this.width / 2}, ${this.height / 2})`);
+      .attr('transform', `translate(${this.width / 2 + (this.lwidth ? this.lwidth : 0)}, ${this.height / 2 + (this.lheight ? this.lheight : 0)})`);
 
     const radius = Math.min(this.width, this.height) / 2;
     const color = this.d3.scaleOrdinal(this.d3.schemeCategory20);
@@ -33,7 +44,7 @@ export default class PieController {
 
     const path = this.d3.arc()
       .innerRadius(this.iradius)
-      .outerRadius(radius - this.iradius);
+      .outerRadius(radius);
 
     this.tooltip.append('div')
       .attr('class', 'label');
@@ -74,6 +85,28 @@ export default class PieController {
       this.tooltip.style('top', (this.d3.event.layerY + 10) + 'px')
         .style('left', (this.d3.event.layerX + 10) + 'px');
     });
+
+    // legend
+    this.svg.append("g")
+      .attr("class", "legendOrdinal")
+      .attr("transform", "translate(10,10)");
+
+    let legendOrdinal = this.legend.legendColor()
+      .scale(color);
+    if(this.lorient) {
+      legendOrdinal.orient(this.lorient);
+    }
+    if(this.lpadding) {
+      legendOrdinal.shapePadding(this.lpadding);
+    }
+    if(this.lsize) {
+      legendOrdinal
+        .shapeWidth(this.lsize)
+        .shapeHeight(this.lsize);
+    }
+
+    this.svg.select(".legendOrdinal")
+      .call(legendOrdinal);
   }
 }
 
