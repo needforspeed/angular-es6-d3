@@ -8,3 +8,11 @@ Example:
 npm i
 npm start
 ```
+
+Example image:
+
+![Pie Chart](img/pie.png)
+
+![Donut Chart](img/donut.png)
+
+Please refer to [assets/](assets/) directory for examples
