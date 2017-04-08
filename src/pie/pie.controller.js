@@ -20,6 +20,10 @@ export default class PieController {
       .attr('class', 'tooltip');
   }
 
+  $onInit() {
+    console.log(this.caption);
+  }
+
   $onChanges(change) {
     if(!change.data.currentValue) {
       return;
@@ -34,7 +38,8 @@ export default class PieController {
       .attr('height', this.height);
 
     this.g
-      .attr('transform', `translate(${this.width / 2 + (this.lwidth ? this.lwidth : 0)}, ${this.height / 2 + (this.lheight ? this.lheight : 0)})`);
+      .attr('transform',
+        `translate(${this.width / 2 + (this.legendWidth ? this.legendWidth : 0)}, ${this.height / 2 + (this.legendHeight ? this.legendHeight : 0)})`);
 
     const radius = Math.min(this.width, this.height) / 2;
     const color = this.d3.scaleOrdinal(this.d3.schemeCategory20);
@@ -43,7 +48,7 @@ export default class PieController {
       .value(d => d[this.value]);
 
     const path = this.d3.arc()
-      .innerRadius(this.iradius)
+      .innerRadius(this.innerRadius)
       .outerRadius(radius);
 
     this.tooltip.append('div')
@@ -55,8 +60,7 @@ export default class PieController {
     this.tooltip.append('div')
       .attr('class', 'percent');
 
-
-    const jsonData = angular.copy(this.data);
+    const jsonData = this.data.slice(this.startIndex !== undefined ? this.startIndex : 0);
 
     let arc = this.g.selectAll('.arc')
       .data(pie(jsonData))
@@ -65,12 +69,12 @@ export default class PieController {
 
     arc.append('path')
       .attr('d', path)
-      .attr('fill', d => color(d.data[this.key]));
+      .attr('fill', d => color(this.displayName ? d.data[this.displayName] : d.data[this.key]));
 
     arc.on('mouseover', d => {
       let total = this.d3.sum(jsonData.map(d => d[this.value]));
       let percent = Math.round(1000 * d.data[this.value] / total) / 10;
-      this.tooltip.select('.label').html(d.data[this.key]);
+      this.tooltip.select('.label').html(this.displayName ? d.data[this.displayName] : d.data[this.key]);
       this.tooltip.select(`.${this.value}`).html(d.data[this.value]);
       this.tooltip.select('.percent').html(`${percent}%`);
       this.tooltip.style('display', 'block');
@@ -82,8 +86,9 @@ export default class PieController {
 
     // optional
     arc.on('mousemove', () => {
-      this.tooltip.style('top', (this.d3.event.layerY + 10) + 'px')
-        .style('left', (this.d3.event.layerX + 10) + 'px');
+      // console.log(`x: ${this.d3.event.layerX + 10}px, y: ${this.d3.event.layerY + 10}px`);
+      this.tooltip.style('top', `${this.d3.event.layerY + 10}px`)
+        .style('left', `${this.d3.event.layerX + 10}px`);
     });
 
     // legend
@@ -93,16 +98,16 @@ export default class PieController {
 
     let legendOrdinal = this.legend.legendColor()
       .scale(color);
-    if(this.lorient) {
-      legendOrdinal.orient(this.lorient);
+    if(this.legendOrient) {
+      legendOrdinal.orient(this.legendOrient);
     }
-    if(this.lpadding) {
-      legendOrdinal.shapePadding(this.lpadding);
+    if(this.legendPadding) {
+      legendOrdinal.shapePadding(this.legendPadding);
     }
-    if(this.lsize) {
+    if(this.legendSize) {
       legendOrdinal
-        .shapeWidth(this.lsize)
-        .shapeHeight(this.lsize);
+        .shapeWidth(this.legendSize)
+        .shapeHeight(this.legendSize);
     }
 
     this.svg.select(".legendOrdinal")

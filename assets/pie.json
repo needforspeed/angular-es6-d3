@@ -9,7 +9,9 @@
   "legendWidth": 40,
   "legendPadding": 5,
   "legendOrient": "vertical",
+  "startIndex": 1,
   "data": [
+    {"age": "AGE", "population": "POPULATION"},
     {"age":"<5", "population":100},
     {"age": "6-15", "population": 220},
     {"age": "16-25", "population": 180},
