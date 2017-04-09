@@ -1,6 +1,6 @@
 {
   "name": "angular-es6-d3",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "angular in es6 featured code with d3",
   "main": "index.js",
   "scripts": {
