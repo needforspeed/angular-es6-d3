@@ -2,26 +2,24 @@
  * Created by zyc on 2017/4/9.
  */
 
-import BarController from './bar.controller';
+import BarsController from './bars.controller';
 
-export const BarComponent = {
+export const BarsComponent = {
   bindings: {
     caption: '<',
     data: '<',
-    xAxis: '<',
-    yAxis: '<',
+    key: '<',
     value: '<',
     displayName: '<',
     startIndex: '<',
     width: '<',
     height: '<',
+    margin: '<',
     legendSize: '<',
-    legendHeight: '<',
-    legendWidth: '<',
     legendPadding: '<',
     legendOrient: '<'
   },
-  controller: BarController,
-  controllerAs: 'barCtrl',
-  selector: 'barChart'
+  controller: BarsController,
+  controllerAs: 'barsCtrl',
+  selector: 'barsChart'
 }
