@@ -39,14 +39,6 @@ export default class StackedBarsController {
     this.g
       .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
 
-    let x = this.d3.scaleBand()
-      .rangeRound([0, width])
-      .paddingInner(0.5);
-
-    let y = this.d3.scaleLinear()
-      .rangeRound([height, 0]);
-    let z = this.d3.scaleOrdinal(this.d3.schemeCategory20);
-
     const jsonData = this.data.slice(this.startIndex !== undefined ? this.startIndex : 0);
     jsonData.forEach(d => {
       d.total = 0;
@@ -55,16 +47,29 @@ export default class StackedBarsController {
       })
     });
 
+    // asc
+    // jsonData.sort((a, b) => a.total - b.total);
+    // desc
     // jsonData.sort((a, b) => b.total - a.total);
-    x.domain(jsonData.map(d => d[this.group]));
-    y.domain([0, this.d3.max(jsonData, d => d.total)]).nice();
-    z.domain(this.keys);
 
+    let x = this.d3.scaleBand()
+      .rangeRound([0, width])
+      .paddingInner(0.5)
+      .domain(jsonData.map(d => d[this.group]));
+
+    let y = this.d3.scaleLinear()
+      .rangeRound([height, 0])
+      .domain([0, this.d3.max(jsonData, d => d.total)]).nice();
+
+    let colors = this.d3.scaleOrdinal(this.d3.schemeCategory20)
+      .domain(this.keys);
+
+    // stacked bars
     this.g.append("g")
       .selectAll("g")
       .data(this.d3.stack().keys(this.keys)(jsonData))
       .enter().append("g")
-        .attr("fill", d => z(d.key))
+        .attr("fill", d => colors(d.key))
       .selectAll("rect")
       .data(d => d)
       .enter().append("rect")
@@ -86,11 +91,10 @@ export default class StackedBarsController {
       .append("text")
         .attr("x", 2)
         .attr("y", y(y.ticks().pop()) + 0.5)
-        .attr("dy", "0.32em")
+        .attr("dy", "0.5em")
         .attr("fill", "#000")
-        .attr("font-weight", "bold")
         .attr("text-anchor", "start")
-        .text("Population");
+        .text("Total");
 
     // legend
     this.g.append("g")
@@ -98,7 +102,7 @@ export default class StackedBarsController {
         .attr("transform", `translate(${this.margin.left}, ${this.margin.top})`);
 
     let legendOrdinal = this.legend.legendColor()
-      .scale(z);
+      .scale(colors);
     if(this.legendOrient) {
       legendOrdinal.orient(this.legendOrient);
     }
