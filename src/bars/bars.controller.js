@@ -67,7 +67,7 @@ export default class BarsController {
       .attr("class", "axis axis-x")
       .attr("transform", `translate(0, ${height})`)
       .call(this.d3.axisBottom(x));
-console.log(this.displayName);
+
     // yAxis
     this.g.append("g")
       .attr("class", "axis axis-y")
