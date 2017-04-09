@@ -1,5 +1,5 @@
 {
-  "caption": "donut chart example",
+  "caption": "donut chart with override display name example",
   "key": "age",
   "value": "population",
   "width": 600,

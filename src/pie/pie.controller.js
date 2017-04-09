@@ -20,10 +20,6 @@ export default class PieController {
       .attr('class', 'tooltip');
   }
 
-  $onInit() {
-    console.log(this.caption);
-  }
-
   $onChanges(change) {
     if(!change.data.currentValue) {
       return;
@@ -86,7 +82,6 @@ export default class PieController {
 
     // optional
     arc.on('mousemove', () => {
-      // console.log(`x: ${this.d3.event.layerX + 10}px, y: ${this.d3.event.layerY + 10}px`);
       this.tooltip.style('top', `${this.d3.event.layerY + 10}px`)
         .style('left', `${this.d3.event.layerX + 10}px`);
     });
