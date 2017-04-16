@@ -9,4 +9,8 @@ export default class Utils {
   setString(s = '') {
     return (typeof s === 'undefined' || s === null) ? "" : s;
   }
+
+  setArray(a = []) {
+    return (typeof a === 'undefined' || a === null) ? [] : a;
+  }
 }
