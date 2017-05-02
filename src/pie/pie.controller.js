@@ -1,8 +1,9 @@
 export default class PieController {
   /* @ngInject */
-  constructor($element, D3Factory, D3LegendFactory) {
+  constructor($element, D3Factory, D3LegendFactory, Utils) {
     this.d3 = D3Factory;
     this.legend = D3LegendFactory;
+    this.utils = Utils;
 
     let figure = this.d3.select($element[0])
       .append('figure');
@@ -33,9 +34,16 @@ export default class PieController {
       .attr('width', this.width)
       .attr('height', this.height);
 
+    const legendWidth   = (this.options && this.options.legend) ? this.utils.setNum(this.options.legend.width) : 0;
+    const legendHeight  = (this.options && this.options.legend) ? this.utils.setNum(this.options.legend.height) : 0;
+    const legendPadding = (this.options && this.options.legend) ? this.utils.setNum(this.options.legend.padding) : 0;
+    const legendSize    = (this.options && this.options.legend) ? this.utils.setNum(this.options.legend.size) : 0;
+    const innerRadius   = (this.options) ? this.utils.setNum(this.options.innerRadius) : 0;
+    const displayName   = (this.options) ? this.utils.setString(this.options.displayName) : '';
+    const legendOrient  = (this.options && this.options.legend) ? this.utils.setString(this.options.legend.orient) : '';
+
     this.g
-      .attr('transform',
-        `translate(${this.width / 2 + (this.legendWidth ? this.legendWidth : 0)}, ${this.height / 2 + (this.legendHeight ? this.legendHeight : 0)})`);
+      .attr('transform', `translate(${this.width / 2 + legendWidth}, ${this.height / 2 + legendHeight})`);
 
     const radius = Math.min(this.width, this.height) / 2;
     const color = this.d3.scaleOrdinal(this.d3.schemeCategory20);
@@ -44,7 +52,7 @@ export default class PieController {
       .value(d => d[this.value]);
 
     const path = this.d3.arc()
-      .innerRadius(this.innerRadius)
+      .innerRadius(innerRadius)
       .outerRadius(radius);
 
     this.tooltip.append('div')
@@ -56,21 +64,19 @@ export default class PieController {
     this.tooltip.append('div')
       .attr('class', 'percent');
 
-    const jsonData = this.data.slice(this.startIndex !== undefined ? this.startIndex : 0);
-
     let arc = this.g.selectAll('.arc')
-      .data(pie(jsonData))
+      .data(pie(this.data))
       .enter().append('g')
       .attr('class', 'arc');
 
     arc.append('path')
       .attr('d', path)
-      .attr('fill', d => color(this.displayName ? d.data[this.displayName] : d.data[this.key]));
+      .attr('fill', d => color(displayName.length ? d.data[displayName] : d.data[this.key]));
 
     arc.on('mouseover', d => {
-      let total = this.d3.sum(jsonData.map(d => d[this.value]));
+      let total = this.d3.sum(this.data.map(d => d[this.value]));
       let percent = Math.round(1000 * d.data[this.value] / total) / 10;
-      this.tooltip.select('.label').html(this.displayName ? d.data[this.displayName] : d.data[this.key]);
+      this.tooltip.select('.label').html(displayName.length ? d.data[displayName] : d.data[this.key]);
       this.tooltip.select(`.${this.value}`).html(d.data[this.value]);
       this.tooltip.select('.percent').html(`${percent}%`);
       this.tooltip.style('display', 'block');
@@ -93,16 +99,16 @@ export default class PieController {
 
     let legendOrdinal = this.legend.legendColor()
       .scale(color);
-    if(this.legendOrient) {
-      legendOrdinal.orient(this.legendOrient);
+    if(legendOrient.length) {
+      legendOrdinal.orient(legendOrient);
     }
-    if(this.legendPadding) {
-      legendOrdinal.shapePadding(this.legendPadding);
+    if(legendPadding) {
+      legendOrdinal.shapePadding(legendPadding);
     }
-    if(this.legendSize) {
+    if(legendSize) {
       legendOrdinal
-        .shapeWidth(this.legendSize)
-        .shapeHeight(this.legendSize);
+        .shapeWidth(legendSize)
+        .shapeHeight(legendSize);
     }
 
     this.svg.select(".legendOrdinal")

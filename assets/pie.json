@@ -4,14 +4,16 @@
   "value": "population",
   "width": 700,
   "height": 600,
-  "innerRadius": 0,
-  "legendSize": 10,
-  "legendWidth": 40,
-  "legendPadding": 5,
-  "legendOrient": "vertical",
-  "startIndex": 1,
+  "options": {
+    "innerRadius": 0,
+    "legend": {
+      "size": 10,
+      "width": 40,
+      "padding": 5,
+      "orient": "vertical"
+    }
+  },
   "data": [
-    {"age": "AGE", "population": "POPULATION"},
     {"age":"<5", "population":100},
     {"age": "6-15", "population": 220},
     {"age": "16-25", "population": 180},

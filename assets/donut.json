@@ -4,12 +4,15 @@
   "value": "population",
   "width": 600,
   "height": 700,
-  "innerRadius": 100,
-  "legendSize": 10,
-  "legendWidth": 60,
-  "legendPadding": 50,
-  "legendOrient": "horizontal",
-  "displayName": "legend",
+  "options": {
+    "innerRadius": 100,
+    "legend":{
+      "size": 10,
+      "padding": 50,
+      "orient": "horizontal"
+    },
+    "displayName": "legend"
+  },
   "data": [
     {"age": "0-9", "population":200, "legend": "0s"},
     {"age": "10-19", "population": 120, "legend": "10s"},

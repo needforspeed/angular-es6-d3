@@ -4,9 +4,10 @@
 
 export default class BarsController {
   /* @ngInject */
-  constructor($element, D3Factory, D3LegendFactory) {
+  constructor($element, D3Factory, D3LegendFactory, Utils) {
     this.d3 = D3Factory;
     this.legend = D3LegendFactory;
+    this.utils = Utils;
 
     let figure = this.d3.select($element[0])
       .append('figure');
@@ -33,13 +34,18 @@ export default class BarsController {
       .attr('width', this.width)
       .attr('height', this.height);
 
-    const width = this.width - this.margin.left - this.margin.right;
-    const height = this.height - this.margin.top - this.margin.bottom;
+    const marginTop    = (this.options && this.options.margin) ? this.utils.setNum(this.options.margin.top)    : 0;
+    const marginRight  = (this.options && this.options.margin) ? this.utils.setNum(this.options.margin.right)  : 0;
+    const marginBottom = (this.options && this.options.margin) ? this.utils.setNum(this.options.margin.bottom) : 0;
+    const marginLeft   = (this.options && this.options.margin) ? this.utils.setNum(this.options.margin.left)   : 0;
+
+    const displayName = (this.options) ? this.utils.setString(this.options.displayName) : '';
+
+    const width = this.width - marginLeft - marginRight;
+    const height = this.height - marginTop - marginBottom;
 
     this.g
-      .attr("transform", `translate(${this.margin.left}, ${this.margin.top})`);
-
-    const jsonData = this.data.slice(this.startIndex !== undefined ? this.startIndex : 0);
+      .attr("transform", `translate(${marginLeft}, ${marginTop})`);
 
     let x = this.d3.scaleBand()
       .range([0, width])
@@ -53,7 +59,7 @@ export default class BarsController {
 
     // bars
     this.g.selectAll(".bar")
-      .data(jsonData)
+      .data(this.data)
       .enter().append("rect")
         .attr("class", "bar")
         .attr("fill", d => colors(d[this.key]))
@@ -70,14 +76,14 @@ export default class BarsController {
 
     // yAxis
     this.g.append("g")
-      .attr("class", "axis axis-y")
+        .attr("class", "axis axis-y")
       .call(this.d3.axisLeft(y))
       .append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 10)
-      .attr("dy", "0.5em")
-      .attr("text-anchor", "end")
-      .attr("fill", "#000")
-      .text(this.displayName ? this.displayName : this.value);
+        .attr("transform", "rotate(-90)")
+        .attr("y", 10)
+        .attr("dy", "0.5em")
+        .attr("text-anchor", "end")
+        .attr("fill", "#000")
+        .text(displayName.length ? displayName : this.value);
   }
 }

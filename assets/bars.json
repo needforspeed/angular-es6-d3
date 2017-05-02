@@ -10,8 +10,15 @@
   ],
   "width": 800,
   "height": 600,
-  "margin": {"top": 25, "right": 40, "bottom": 30, "left": 40},
   "value": "v",
   "key": "owner",
-  "displayName": "Scores"
+  "options": {
+    "margin": {
+      "top": 25,
+      "right": 40,
+      "bottom": 30,
+      "left": 40
+    },
+    "displayName": "Scores"
+  }
 }

@@ -1,14 +1,7 @@
 {
   "caption": "stacked bars example",
   "height": 600,
-  "width": 1500,
-  "margin": {"top": 25, "right": 50, "bottom": 30, "left": 50},
-  "keys": ["Under 5 Years", "5 to 13 Years", "14 to 17 Years", "18 to 24 Years", "25 to 44 Years", "45 to 64 Years", "65 Years and Over"],
-  "displayNames": ["<5", "5-13", "14-17", "18-24", "25-44", "45-64", ">65"],
-  "group": "State",
-  "legendSize": 10,
-  "legendPadding": 150,
-  "legendOrient": "horizontal",
+  "width": 1000,
   "data": [
     {
       "State": "AL",
@@ -520,5 +513,20 @@
       "45 to 64 Years": 147279,
       "65 Years and Over": 65614
     }
-  ]
+  ],
+  "keys": ["Under 5 Years", "5 to 13 Years", "14 to 17 Years", "18 to 24 Years", "25 to 44 Years", "45 to 64 Years", "65 Years and Over"],
+  "group": "State",
+  "options": {
+    "displayNames": ["<5", "5-13", "14-17", "18-24", "25-44", "45-64", ">65"],
+    "legendSize": 10,
+    "legendPadding": 120,
+    "legendOrient": "horizontal",
+    "margin": {
+      "top": 25,
+      "right": 50,
+      "bottom": 30,
+      "left": 50
+    },
+    "sort": "asc"
+  }
 }

@@ -6,16 +6,9 @@ export const PieComponent = {
     data: '<',
     key: '<',
     value: '<',
-    displayName: '<',
-    startIndex: '<',
+    options: '<',
     width: '<',
-    height: '<',
-    innerRadius: '<',
-    legendSize: '<',
-    legendHeight: '<',
-    legendWidth: '<',
-    legendPadding: '<',
-    legendOrient: '<'
+    height: '<'
   },
   controller: PieController,
   controllerAs: 'pieCtrl',

@@ -4,52 +4,38 @@
     <title>My Angular D3</title>
   </head>
   <body ng-controller="FetchDataController as fdc">
-    <pie-chart data="fdc.pie.data"
+    <pie-chart caption="fdc.pie.caption"
                width="fdc.pie.width"
                height="fdc.pie.height"
+               data="fdc.pie.data"
                key="fdc.pie.key"
                value="fdc.pie.value"
-               start-index="fdc.pie.startIndex"
-               inner-radius="fdc.pie.innerRadius"
-               caption="fdc.pie.caption"
-               legend-width="fdc.pie.legendWidth"
-               legend-padding="fdc.pie.legendPadding"
-               legend-orient="fdc.pie.legendOrient"
-               legend-size="fdc.pie.legendSize">
+
+               options="fdc.pie.options">
     </pie-chart>
-    <pie-chart data="fdc.donut.data"
+    <pie-chart caption="fdc.donut.caption"
                width="fdc.donut.width"
                height="fdc.donut.height"
+               data="fdc.donut.data"
                key="fdc.donut.key"
                value="fdc.donut.value"
-               inner-radius="fdc.donut.innerRadius"
-               caption="fdc.donut.caption"
-               legend-height="fdc.donut.legendHeight"
-               legend-padding="fdc.donut.legendPadding"
-               legend-orient="fdc.donut.legendOrient"
-               legend-size="fdc.donut.legendSize"
-               display-name="fdc.donut.displayName">
+               options="fdc.donut.options">
     </pie-chart>
-    <bars-chart data="fdc.bars.data"
-                caption="fdc.bars.caption"
+    <bars-chart caption="fdc.bars.caption"
                 width="fdc.bars.width"
                 height="fdc.bars.height"
+                data="fdc.bars.data"
                 key="fdc.bars.key"
                 value="fdc.bars.value"
-                display-name="fdc.bars.displayName"
-                margin="fdc.bars.margin">
-
+                options="fdc.bars.options">
     </bars-chart>
-    <stacked-bars-chart data="fdc.stackedBars.data"
-                        caption="fdc.stackedBars.caption"
+    <stacked-bars-chart caption="fdc.stackedBars.caption"
                         width="fdc.stackedBars.width"
                         height="fdc.stackedBars.height"
-                        margin="fdc.stackedBars.margin"
-                        legend-padding="fdc.stackedBars.legendPadding"
-                        legend-orient="fdc.stackedBars.legendOrient"
-                        group="fdc.stackedBars.group"
+                        data="fdc.stackedBars.data"
                         keys="fdc.stackedBars.keys"
-                        display-names="fdc.stackedBars.displayNames">
+                        group="fdc.stackedBars.group"
+                        options="fdc.stackedBars.options">
     </stacked-bars-chart>
     <script src="bundle.js" type="text/javascript"></script>
   </body>

@@ -10,14 +10,9 @@ export const BarsComponent = {
     data: '<',
     key: '<',
     value: '<',
-    displayName: '<',
-    startIndex: '<',
     width: '<',
     height: '<',
-    margin: '<',
-    legendSize: '<',
-    legendPadding: '<',
-    legendOrient: '<'
+    options: '<'
   },
   controller: BarsController,
   controllerAs: 'barsCtrl',

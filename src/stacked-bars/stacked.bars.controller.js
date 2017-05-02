@@ -4,9 +4,10 @@
 
 export default class StackedBarsController {
   /* @ngInject */
-  constructor($element, D3Factory, D3LegendFactory) {
+  constructor($element, D3Factory, D3LegendFactory, Utils) {
     this.d3 = D3Factory;
     this.legend = D3LegendFactory;
+    this.utils = Utils;
 
     let figure = this.d3.select($element[0])
       .append('figure');
@@ -33,33 +34,36 @@ export default class StackedBarsController {
       .attr('width', this.width)
       .attr('height', this.height);
 
-    const width = this.width - this.margin.left - this.margin.right;
-    const height = this.height - this.margin.top - this.margin.bottom;
+    const marginTop    = (this.options && this.options.margin) ? this.utils.setNum(this.options.margin.top) : 0;
+    const marginRight  = (this.options && this.options.margin) ? this.utils.setNum(this.options.margin.right) : 0;
+    const marginBottom = (this.options && this.options.margin) ? this.utils.setNum(this.options.margin.bottom) : 0;
+    const marginLeft   = (this.options && this.options.margin) ? this.utils.setNum(this.options.margin.left) : 0;
+
+    const width = this.width - marginLeft - marginRight;
+    const height = this.height - marginTop - marginBottom;
 
     this.g
-      .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+      .attr('transform', `translate(${marginLeft}, ${marginTop})`);
 
-    const jsonData = this.data.slice(this.startIndex !== undefined ? this.startIndex : 0);
-    jsonData.forEach(d => {
+    this.data.forEach(d => {
       d.total = 0;
-      this.keys.forEach(k => {
-        d.total += d[k]
-      })
+      this.keys.forEach(k => d.total += d[k])
     });
 
-    // asc
-    // jsonData.sort((a, b) => a.total - b.total);
-    // desc
-    // jsonData.sort((a, b) => b.total - a.total);
+    if(this.options && this.options.sort && this.options.sort === 'asc') {
+      this.data.sort((a, b) => a.total - b.total);
+    } else if(this.options && this.options.sort && this.options.sort === 'desc') {
+      this.data.sort((a, b) => b.total - a.total);
+    }
 
     let x = this.d3.scaleBand()
       .rangeRound([0, width])
       .paddingInner(0.5)
-      .domain(jsonData.map(d => d[this.group]));
+      .domain(this.data.map(d => d[this.group]));
 
     let y = this.d3.scaleLinear()
       .rangeRound([height, 0])
-      .domain([0, this.d3.max(jsonData, d => d.total)]).nice();
+      .domain([0, this.d3.max(this.data, d => d.total)]).nice();
 
     let colors = this.d3.scaleOrdinal(this.d3.schemeCategory20)
       .domain(this.keys);
@@ -67,7 +71,7 @@ export default class StackedBarsController {
     // stacked bars
     this.g.append("g")
       .selectAll("g")
-      .data(this.d3.stack().keys(this.keys)(jsonData))
+      .data(this.d3.stack().keys(this.keys)(this.data))
       .enter().append("g")
         .attr("fill", d => colors(d.key))
       .selectAll("rect")
@@ -99,20 +103,20 @@ export default class StackedBarsController {
     // legend
     this.g.append("g")
         .attr("class", "legendOrdinal")
-        .attr("transform", `translate(${this.margin.left}, ${this.margin.top})`);
+        .attr("transform", `translate(${marginLeft}, ${marginTop})`);
 
     let legendOrdinal = this.legend.legendColor()
       .scale(colors);
-    if(this.legendOrient) {
-      legendOrdinal.orient(this.legendOrient);
+    if(this.options.legendOrient) {
+      legendOrdinal.orient(this.options.legendOrient);
     }
-    if(this.legendPadding) {
-      legendOrdinal.shapePadding(this.legendPadding);
+    if(this.options.legendPadding) {
+      legendOrdinal.shapePadding(this.options.legendPadding);
     }
-    if(this.legendSize) {
+    if(this.options.legendSize) {
       legendOrdinal
-        .shapeWidth(this.legendSize)
-        .shapeHeight(this.legendSize);
+        .shapeWidth(this.options.legendSize)
+        .shapeHeight(this.options.legendSize);
     }
 
     this.g.select(".legendOrdinal")

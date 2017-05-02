@@ -7,18 +7,12 @@ import StackedBarsController from './stacked.bars.controller';
 export const StackedBarsComponent = {
   bindings: {
     caption: '<',
-    margin: '<',
-    data: '<',
-    group: '<',
-    keys: '<',
-    values: '<',
-    displayNames: '<',
-    startIndex: '<',
     width: '<',
     height: '<',
-    legendSize: '<',
-    legendPadding: '<',
-    legendOrient: '<'
+    data: '<',
+    keys: '<',
+    group: '<',
+    options: '<'
   },
   controller: StackedBarsController,
   controllerAs: 'stackedBarsCtrl',
