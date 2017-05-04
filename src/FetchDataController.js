@@ -9,5 +9,7 @@ export default class FetchDataController {
       .then(res => this.bars = res.data);
   	$http.get('/stackedBars.json')
       .then(res => this.stackedBars = res.data);
+  	$http.get('/lines.json')
+			.then(res => this.lines = res.data);
   }	
 }
